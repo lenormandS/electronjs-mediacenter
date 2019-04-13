@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <title>Test</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Connexion</h4>
+                        </div>
+                        <div class="panel-body">
+                            <form id="form_connection">
+                                <div class="form-group">
+                                    <label for="pseudo">Pseudo / Email</label>
+                                    <input type="text" id="pseudo" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">password</label>
+                                    <input type="password" id="password" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Validez" class="btn btn-success">
+                                    <input type="reset" value="Annuler" class="btn btn-danger">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Inscription</h4>
+                        </div>
+                        <div class="panel-body">
+                            <form id="form_inscription">
+                                <div class="form-group">
+                                    <label for="">Email</label>
+                                    <input type="email" id="email" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Pseudo</label>
+                                    <input type="text" id="pseudo" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Email</label>
+                                    <input type="password" id="password" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Validez mon inscription" class="btn btn-success">
+                                    <input type="reset" value="Annulez mon inscription" class="btn btn-danger">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        const {ipcRenderer} = require('electron');
+        var pseudo = document.getElementById("pseudo").value;
+        var password = document.getElementById("password").value;
+        var email = document.getElementById('email').value;
+        document.getElementById('form_connection').addEventListener("submit",(e) => {
+            e.preventDefault();
+            ipcRenderer.send("login:verification",{
+                Pseudo : document.getElementById("pseudo").value,
+                Password : document.getElementById("password").value
+            })
+        })
+        document.getElementById('form_inscription').addEventListener("submit",(e) => {
+            e.preventDefault();
+            ipcRenderer.send("inscription:verification",{
+                Pseudo : document.getElementById("pseudo").value,
+                Password : document.getElementById("password").value,
+                Email: document.getElementById('email').value
+            })
+        })
+    </script>
+</html>
